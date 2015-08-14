@@ -1,7 +1,7 @@
 {
-    "name": "clj-slackbot",
-    "description": "A clojure chat bot that is easy to integrate with slack.",
-    "keywords": ["clojure", "slack", "chat", "bot"],
+    "name": "instagram-slackbot",
+    "description": "A bot that integrates instagram with slack.",
+    "keywords": ["clojure", "slack", "instagram", "bot"],
     "env": {
         "COMMAND_TOKEN": {
             "description": "The token for your slash command hook."
