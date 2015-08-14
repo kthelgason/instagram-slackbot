@@ -1,8 +1,9 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-# clj-slackbot
+# instagram-slackbot
 
-A clojure project to run a eval bot which can be easily hooked up in Slack.
+A clojure project to run a bot that recieves instagram notifications and
+forwards them to slack.
 
 ## How to run?
 
