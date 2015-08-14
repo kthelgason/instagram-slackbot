@@ -69,6 +69,11 @@
       format-result
       (post-to-slack channel)))
 
+(defn handle-subscription [params]
+  (if-not (contains?  params "hub.challenge")
+    {:status 400 :body "Invalid Request"}
+    {:status 200 :body (get params "hub.challenge")}))
+
 (defn handle-clj [params]
   (if-not (= (:token params) command-token)
     {:status 403 :body "Unauthorized"}
@@ -82,6 +87,7 @@
        :headers {"Content-Type" "text/plain"}})))
 
 (defroutes approutes
+  (GET "/handle-subscription" req (handle-subscription (:params req)))
   (POST "/clj" req (handle-clj (:params req)))
   (route/not-found "Not Found"))
 
