@@ -11,11 +11,11 @@
                  [ring/ring-jetty-adapter "1.3.1"]
                  [ring/ring-defaults "0.1.2"]]
   :plugins [[lein-ring "0.8.13"]]
-  :ring {:handler clj-slackbot.core.handler/app}
-  :uberjar-name "clj-slackbot.jar"
-  :main clj-slackbot.core.handler
+  :ring {:handler instagram-slackbot.core.handler/app}
+  :uberjar-name "instagram-slackbot.jar"
+  :main instagram-slackbot.core.handler
   :profiles
-  {:dev {:repl-options {:init-ns clj-slackbot.core.handler}
+  {:dev {:repl-options {:init-ns instagram-slackbot.core.handler}
          :dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring-mock "0.1.5"]]}
    :uberjar {:aot :all}})
