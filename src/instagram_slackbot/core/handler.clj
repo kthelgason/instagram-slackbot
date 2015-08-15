@@ -1,6 +1,7 @@
-(ns clj-slackbot.core.handler
+(ns instagram-slackbot.core.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
+            [clojure.data.json :as json]
             [clojail.core :refer [sandbox]]
             [clojail.testers :refer [secure-tester-without-def blanket]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
@@ -11,10 +12,6 @@
            java.util.concurrent.TimeoutException)
   (:gen-class))
 
-(def clj-slackbot-tester
-  (conj secure-tester-without-def (blanket "clj-slackbot")))
-
-(def sb (sandbox clj-slackbot-tester))
 
 (def post-url
   (:post-url env))
@@ -39,13 +36,15 @@
 
 (defn notification-recieved [body]
   (do
-                                        ;(post-to-slack (str "New image for hashtag"))
-    (println body)
+    (post-to-slack (str "New image for hashtag #" (get (first body) "object_id")))
     {:status 200}))
+
+(defn read-json-body [req]
+  (json/read-str (slurp (:body req))))
 
 (defroutes approutes
   (GET "/handle-subscription" req (handle-subscription (:params req)))
-  (POST "/handle-subscription" req (notification-recieved (:body req)))
+  (POST "/handle-subscription" req (notification-recieved (read-json-body req)))
   (route/not-found "Not Found"))
 
 (def app (wrap-defaults approutes
