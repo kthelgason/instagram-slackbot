@@ -7,7 +7,8 @@
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer [run-jetty]]
-            [clj-http.client :as client])
+            [clj-http.client :as client]
+            [instagram-slackbot.core.instagram :as insta])
   (:import java.io.StringWriter
            java.util.concurrent.TimeoutException)
   (:gen-class))
@@ -19,24 +20,24 @@
 (def command-token
   (:command-token env))
 
-(defn post-to-slack
-  ([s channel]
-     (let [p (if channel {:channel channel} {})]
-       (client/post post-url
-                   {:content-type :json
-                    :form-params (assoc p :text s)})))
-  ([s]
-     (post-to-slack s nil)))
+(defn post-to-slack [s img]
+   (let [att [{"title" s "image_url" img}]]
+     (client/post post-url
+                  {:content-type :json
+                   :form-params {:attachments att}})))
 
 
 (defn handle-subscription [params]
-  (if-not (contains?  params "hub.challenge")
+  (if-not (contains? params "hub.challenge")
     {:status 400 :body "Invalid Request"}
     {:status 200 :body (get params "hub.challenge")}))
 
+
 (defn notification-recieved [body]
   (do
-    (post-to-slack (str "New image for hashtag #" (get (first body) "object_id")))
+    (let [tag (get (first body) "object_id")]
+      (post-to-slack (str "New image for hashtag #" tag)
+                     (insta/fetch-image-for-tag tag)))
     {:status 200}))
 
 (defn read-json-body [req]
