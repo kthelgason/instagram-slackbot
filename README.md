@@ -9,7 +9,9 @@ forwards them to slack.
 
 You need:
  - *POST_URL* - The URL to post stuff to slack (an incoming web-hook).
- - *COMMAND_TOKEN* - The token for your slash command hook.
+ - *CLIENT_ID* - Your Instagram client id. Visit [this page](https://instagram.com/developer/clients/manage/) to obtain yours.
+
+The easiest way to get going is to push the Heroku button above. This will prompt you for the environment variables and start the app running on Heroku.
 
 If you have the jar file, just do:
 
@@ -20,14 +22,17 @@ Or can checkout the source and run:
     POST_URL=<post url> COMMAND_TOKEN=<command token> lein run
 
 
-Once you have the server running it will listen for requests on `/clj` end-point.  It is made to accept slack command (with clojure to evaluate in the "text" field).  The evaluated result is sent out to the POST url on the same channel on which it was received.
+## Recieving Instagram notifications
+
+Check out the Instagram [docs](https://instagram.com/developer/realtime/) for information on how to do this.
+The `callback_url` that should be supplied to instagram is `http://yourapp.com/handle-subscription`.
 
 ## Slack Configuration
-Create two integrations:
+Create an integration in the Slack web interface:
 
- - Slash Command - Make it post to wherever your server is running: http://myhost.com/clj and note down the COMMAND_TOKEN.
  - Incoming Webhook - Create a new Incoming Webhook, notedown its POST_URL.
+
 
 ## License
 
-Copyright © 2014 Uday Verma.  Licensed under the same terms as Clojure (EPL).
+Copyright © 2015 Kári Tristan Helgason.  Licensed under the same terms as Clojure (EPL).
