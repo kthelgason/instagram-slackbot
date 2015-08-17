@@ -15,11 +15,11 @@ The easiest way to get going is to push the Heroku button above. This will promp
 
 If you have the jar file, just do:
 
-    POST_URL=<post url> COMMAND_TOKEN=<command token> java -jar clj-slackbot.jar
+    POST_URL=<post url> CLIENT_ID=<client id> java -jar clj-slackbot.jar
 
 Or can checkout the source and run:
 
-    POST_URL=<post url> COMMAND_TOKEN=<command token> lein run
+    POST_URL=<post url> CLIENT_ID=<client id> lein run
 
 
 ## Recieving Instagram notifications
