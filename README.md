@@ -32,6 +32,9 @@ Create an integration in the Slack web interface:
 
  - Incoming Webhook - Create a new Incoming Webhook, notedown its POST_URL.
 
+## Acknowledgements
+This is heavily based on [verma/clj-slackbot](https://github.com/verma/clj-slackbot).
+
 
 ## License
 
